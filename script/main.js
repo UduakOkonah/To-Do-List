@@ -35,4 +35,48 @@ if (goalForm) {
     }
   });
 }
+import { signup, login, getLoggedInUser, logout } from './auth.js';
+
+// Signup form submit
+signupForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const username = signupUsernameInput.value.trim();
+  const password = signupPasswordInput.value.trim();
+
+  if (signup(username, password)) {
+    alert('Signup successful! Please login.');
+  } else {
+    alert('Username already taken, try another.');
+  }
+});
+
+// Login form submit
+loginForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const username = loginUsernameInput.value.trim();
+  const password = loginPasswordInput.value.trim();
+
+  if (login(username, password)) {
+    window.location.href = 'dashboard.html'; // Redirect after successful login
+  } else {
+    alert('Invalid username or password.');
+  }
+});
+
+// In dashboard.js, display logged-in username and logout
+const usernameDisplay = document.getElementById('userNameDisplay');
+const logoutBtn = document.getElementById('logoutBtn');
+
+const currentUser = getLoggedInUser();
+if (currentUser) {
+  usernameDisplay.textContent = currentUser;
+} else {
+  // No user logged in, redirect to login page
+  window.location.href = 'login.html';
+}
+
+logoutBtn.addEventListener('click', () => {
+  logout();
+  window.location.href = 'login.html';
+});
 

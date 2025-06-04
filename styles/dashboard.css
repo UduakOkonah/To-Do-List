@@ -359,3 +359,108 @@ main {
     max-width: 100%;
   }
 }
+
+@media (max-width: 480px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 20px;
+    gap: 15px;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  #logoutBtn {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+  }
+
+  main {
+    padding: 20px 15px;
+    gap: 20px;
+  }
+
+  .add-task-section {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #newTaskInput {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border-radius: 12px;
+  }
+
+  #addTaskBtn {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 1rem;
+    border-radius: 12px;
+  }
+
+  .board {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .column {
+    flex: 1 1 100%;
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .column h2 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+
+  .task-list {
+    max-height: 300px;
+  }
+
+  .task-list li {
+    font-size: 1rem;
+    padding: 12px 15px;
+  }
+
+  .suggestions {
+    padding: 15px;
+    font-size: 0.9rem;
+  }
+
+  .goal-assistant {
+    padding: 15px;
+  }
+
+  .goal-assistant h2 {
+    font-size: 1.3rem;
+  }
+
+  .goal-assistant input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .goal-assistant button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .ai-float-btn {
+    bottom: 15px;
+    right: 15px;
+    padding: 10px 12px;
+    font-size: 18px;
+  }
+
+  .chat-box {
+    width: 90vw;
+    bottom: 70px;
+    right: 5vw;
+  }
+}

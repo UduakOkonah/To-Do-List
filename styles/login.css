@@ -210,15 +210,65 @@ textarea:invalid:not(:focus) {
 
 
 @media (max-width: 768px) {
+  body, html {
+    height: auto; /* avoid forcing full viewport height on mobile */
+  }
+
   .login-container {
     flex-direction: column;
-    height: 100vh;
+    height: auto; /* let it grow naturally */
+    width: 95vw;
+    max-width: 400px; /* a bit narrower for phones */
+    box-shadow: 0 10px 30px rgba(255, 20, 147, 0.3);
+    border-radius: 15px;
   }
+
   .left-side {
-    height: 40vh;
+    height: 200px; /* fixed height for image */
+    overflow: hidden;
   }
+
+  .left-side img {
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(90%);
+    transition: transform 0.5s ease;
+  }
+
   .right-side {
-    height: 60vh;
-    padding: 40px 20px;
+    padding: 30px 20px;
+    height: auto;
+    background: linear-gradient(135deg, #f48fb1, #f06292);
+  }
+
+  .right-side h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  input[type="text"], input[type="password"], input[type="email"] {
+    font-size: 1rem;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+  }
+
+  button {
+    font-size: 1.1rem;
+    padding: 12px;
+  }
+
+  .form-switcher {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  label {
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  .error-msg {
+    font-size: 0.9rem;
   }
 }

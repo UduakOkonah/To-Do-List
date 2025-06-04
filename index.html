@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login or Signup - ToDo</title>
+  <link rel="stylesheet" href="styles/login.css" />
+</head>
+<body>
+  <main class="login-container">
+    <section class="left-side">
+      <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" alt="Pink Flowers" />
+    </section>
+    <section class="right-side">
+
+      <div class="form-switcher">
+        <button id="showLoginBtn" class="active" aria-pressed="true">Login</button>
+        <button id="showSignupBtn" aria-pressed="false">Sign Up</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form id="loginForm" aria-label="Login form" novalidate>
+        <h2>Welcome Back!</h2>
+        <label for="loginUsername">Username</label>
+        <input type="text" id="loginUsername" name="loginUsername" placeholder="Your username" autocomplete="off" required />
+
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" name="loginPassword" placeholder="Your password" required />
+
+        <button type="submit">Login</button>
+        <p id="loginError" class="error-msg" role="alert" aria-live="polite"></p>
+      </form>
+
+      <!-- SIGNUP FORM -->
+      <form id="signupForm" aria-label="Signup form" novalidate hidden>
+        <h2>Create Account</h2>
+
+        <label for="signupUsername">Username</label>
+        <input type="text" id="signupUsername" name="signupUsername" placeholder="Choose a username" autocomplete="off" required />
+
+        <label for="signupEmail">Email</label>
+        <input type="email" id="signupEmail" name="signupEmail" placeholder="Your email" required />
+
+        <label for="signupPassword">Password</label>
+        <input type="password" id="signupPassword" name="signupPassword" placeholder="Create password" required minlength="6" />
+
+        <label for="signupConfirmPassword">Confirm Password</label>
+        <input type="password" id="signupConfirmPassword" name="signupConfirmPassword" placeholder="Confirm password" required minlength="6" />
+
+        <button type="submit">Sign Up</button>
+        <p id="signupError" class="error-msg" role="alert" aria-live="polite"></p>
+      </form>
+
+    </section>
+  </main>
+
+  <script src="script/login.js"></script>
+</body>
+</html>

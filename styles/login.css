@@ -1,0 +1,224 @@
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  height: 100vh;
+  background: #ffe6f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  display: flex;
+  width: 95vw;
+  max-width: 900px;
+  height: 750px;
+  box-shadow: 0 15px 40px rgba(255, 20, 147, 0.4);
+  border-radius: 15px;
+  overflow: hidden;
+  background: white;
+}
+
+.left-side {
+  flex: 1;
+  overflow: hidden;
+}
+
+.left-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(90%);
+  transition: transform 0.5s ease;
+}
+
+.left-side img:hover {
+  transform: scale(1.05);
+}
+
+.right-side {
+  flex: 1;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(135deg, #f48fb1, #f06292);
+  color: white;
+}
+
+.right-side h2 {
+  font-weight: 700;
+  font-size: 2.8rem;
+  margin-bottom: 30px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+input[type="text"] {
+  padding: 12px 15px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  outline: none;
+  transition: box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus {
+  box-shadow: 0 0 8px #ff4081;
+}
+
+button {
+  background: #ff4081;
+  border: none;
+  padding: 15px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 64, 129, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+button:hover,
+button:focus {
+  background: #e91e63;
+  outline: none;
+}
+
+/* FORM SWITCHER */
+.form-switcher {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  gap: 15px;
+}
+
+.form-switcher button {
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 8px 25px;
+  font-weight: 700;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  outline-offset: 3px;
+}
+
+.form-switcher button.active,
+.form-switcher button:hover,
+.form-switcher button:focus {
+  background: white;
+  color: #f06292;
+  border-color: white;
+  outline: none;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form[hidden] {
+  display: none !important;
+}
+
+.error-msg {
+  color: #ff1744;
+  font-weight: 600;
+  margin-top: 10px;
+  min-height: 1.2em;
+  font-size: 1rem;
+}
+
+/* Smaller spacing between label and input */
+label {
+  margin-bottom: 6px;
+}
+
+/* Add some spacing after input */
+input {
+  margin-bottom: 20px;
+}
+
+/* Style all text inputs and textareas */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 1rem;
+  border: 2px solid white;
+  border-radius: 8px;
+  background-color: rgba(255 255 255 / 0.1);
+  color: white;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  outline-offset: 3px;
+  outline-color: transparent;
+  margin-bottom: 15px;
+  resize: vertical; /* for textarea */
+}
+
+/* Placeholder text */
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255 255 255 / 0.7);
+  font-style: italic;
+}
+
+/* Focus effect */
+input:focus,
+textarea:focus {
+  border-color: #ff4081; /* pink accent */
+  background-color: rgba(255 255 255 / 0.2);
+  outline-color: #ff4081;
+}
+
+/* Disabled inputs style (if any) */
+input:disabled,
+textarea:disabled {
+  background-color: rgba(255 255 255 / 0.05);
+  color: rgba(255 255 255 / 0.5);
+  cursor: not-allowed;
+}
+
+/* For better accessibility: when input invalid */
+input:invalid:not(:focus),
+textarea:invalid:not(:focus) {
+  border-color: #ff1744;
+}
+
+
+
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    height: 100vh;
+  }
+  .left-side {
+    height: 40vh;
+  }
+  .right-side {
+    height: 60vh;
+    padding: 40px 20px;
+  }
+}

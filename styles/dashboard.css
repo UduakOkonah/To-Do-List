@@ -1,0 +1,361 @@
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background: linear-gradient(135deg, #f48fb1, #f06292);
+  color: white;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(244, 143, 177, 0.4);
+}
+
+header h1 {
+  font-weight: 700;
+  font-size: 2rem;
+  margin: 0;
+  user-select: none;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+#logoutBtn {
+  background: #ff4081;
+  border: none;
+  padding: 10px 20px;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 64, 129, 0.6);
+  transition: background-color 0.3s ease;
+}
+
+#logoutBtn:hover,
+#logoutBtn:focus {
+  background: #e91e63;
+  outline: none;
+}
+
+main {
+  flex: 1;
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.add-task-section {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+#newTaskInput {
+  flex: 1;
+  padding: 15px 20px;
+  font-size: 1.2rem;
+  border-radius: 15px;
+  border: 2px solid #f48fb1;
+  outline: none;
+  transition: box-shadow 0.3s ease;
+}
+
+#newTaskInput:focus {
+  box-shadow: 0 0 15px #ff4081;
+  border-color: #ff4081;
+}
+
+#addTaskBtn {
+  background: #ff4081;
+  border: none;
+  padding: 15px 30px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: white;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(255, 64, 129, 0.7);
+  transition: background-color 0.3s ease;
+}
+
+#addTaskBtn:hover,
+#addTaskBtn:focus {
+  background: #e91e63;
+  outline: none;
+}
+
+.board {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.column {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(244, 143, 177, 0.3);
+  flex: 1 1 30%;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  transition: transform 0.3s ease;
+}
+
+.column:hover {
+  transform: scale(1.03);
+}
+
+.column h2 {
+  font-weight: 700;
+  font-size: 1.6rem;
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #f06292;
+  user-select: none;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(255, 64, 129, 0.5);
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+  max-height: 500px;
+}
+
+.task-list li {
+  background: #ffe6f0;
+  margin-bottom: 15px;
+  padding: 15px 20px;
+  border-radius: 15px;
+  font-size: 1.1rem;
+  color: #880e4f;
+  box-shadow: 0 5px 10px rgba(255, 64, 129, 0.2);
+  cursor: grab;
+  position: relative;
+  user-select: none;
+  transition: box-shadow 0.2s ease;
+}
+
+.task-list li:active {
+  cursor: grabbing;
+  box-shadow: 0 10px 25px rgba(255, 64, 129, 0.6);
+}
+
+.task-list li.dragging {
+  opacity: 0.7;
+  transform: scale(1.05);
+  box-shadow: 0 15px 40px rgba(255, 64, 129, 0.7);
+}
+
+.task-list li .delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-weight: 900;
+  color: #c2185b;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+
+.task-list li .delete-btn:hover,
+.task-list li .delete-btn:focus {
+  color: #880e4f;
+  outline: none;
+}
+
+.suggestions {
+  background: rgba(255, 192, 203, 0.1); /* light pink glow */
+  border: 2px dashed #ff69b4;
+  padding: 20px;
+  margin-top: 30px;
+  border-radius: 12px;
+  color: #4c4348;
+  animation: fadeInUp 0.6s ease;
+}
+
+.suggestions h3 {
+  color: #ff69b4;
+  margin-bottom: 10px;
+}
+
+.suggestions ul {
+  list-style: circle;
+  padding-left: 20px;
+  font-size: 1rem;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.goal-assistant {
+  background-color: #ffe4ec;
+  padding: 20px;
+  margin-top: 40px;
+  border-radius: 16px;
+  animation: fadeInUp 0.5s ease;
+}
+
+.goal-assistant h2 {
+  color: #d63384;
+  margin-bottom: 10px;
+}
+
+.goal-assistant input {
+  padding: 10px;
+  border: 2px solid #ff69b4;
+  border-radius: 10px;
+  width: 60%;
+  margin-right: 10px;
+}
+
+.goal-assistant button {
+  padding: 10px 16px;
+  background-color: #ff69b4;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.goal-assistant button:hover {
+  background-color: #e052a0;
+}
+
+#goalBreakdown ul {
+  margin-top: 15px;
+  padding-left: 20px;
+}
+
+/* Floating AI button */
+.ai-float-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ff69b4;
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease;
+}
+
+.ai-float-btn:hover {
+  transform: scale(1.1);
+}
+
+/* AI Chat Box */
+.chat-box {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 300px;
+  background: white;
+  border: 2px solid #ffb6c1;
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-box.hidden {
+  display: none;
+}
+
+.chat-header {
+  background: #ff69b4;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-body {
+  padding: 10px;
+  height: 200px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+.chat-body div {
+  margin-bottom: 10px;
+}
+
+.chat-body .user {
+  text-align: right;
+  color: #333;
+}
+
+.chat-body .ai {
+  text-align: left;
+  color: #ff1493;
+}
+
+#aiForm {
+  display: flex;
+  border-top: 1px solid #eee;
+}
+
+#aiForm input {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-right: 1px solid #eee;
+}
+
+#aiForm button {
+  background: #ff69b4;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+
+@media (max-width: 900px) {
+  .board {
+    flex-direction: column;
+  }
+  .column {
+    flex: 1 1 auto;
+    max-width: 100%;
+  }
+}

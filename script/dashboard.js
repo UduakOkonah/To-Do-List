@@ -165,14 +165,17 @@ logoutBtn.addEventListener('click', () => {
   setupDragAndDrop();
 })();
 
-const voiceBtn = document.getElementById('voiceBtn');
 
-if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+// Voice recognition setup
+const voiceBtn = document.getElementById('voiceBtn');
+const goalInput = document.getElementById('goalInput');
+
+if (voiceBtn && ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = new SpeechRecognition();
   recognition.lang = 'en-US';
-  recognition.continuous = false;
   recognition.interimResults = false;
+  recognition.continuous = false;
 
   voiceBtn.addEventListener('click', () => {
     voiceBtn.textContent = '🎙️ Listening...';
@@ -189,60 +192,42 @@ if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
     voiceBtn.textContent = '🎤';
   };
 
-  recognition.onerror = (e) => {
-    console.error("Speech recognition error:", e.error);
+  recognition.onerror = (event) => {
+    console.error('Speech recognition error:', event.error);
     voiceBtn.textContent = '🎤';
   };
 } else {
   voiceBtn.disabled = true;
-  voiceBtn.title = "Speech recognition not supported in this browser.";
+  voiceBtn.title = 'Speech recognition not supported in this browser.';
 }
 
-const prompt = "Give me three tips to stay productive.";
-fetch('/api/askGPT', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ prompt })
-})
-  .then(res => res.json())
-  .then(data => {
-    console.log("AI says:", data.reply);
-  })
-  .catch(err => console.error(err));
+// Handle goal breakdown form submit and ask Gemini API
+const goalForm = document.getElementById('goalForm');
+const goalBreakdown = document.getElementById('goalBreakdown');
 
-
-const openAI = document.getElementById('openAI');
-const closeAI = document.getElementById('closeAI');
-const aiBox = document.getElementById('aiChatBox');
-const aiForm = document.getElementById('aiForm');
-const aiInput = document.getElementById('aiInput');
-const chatMessages = document.getElementById('chatMessages');
-
-openAI.addEventListener('click', () => aiBox.classList.remove('hidden'));
-closeAI.addEventListener('click', () => aiBox.classList.add('hidden'));
-
-aiForm.addEventListener('submit', async (e) => {
+goalForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const userText = aiInput.value.trim();
-  if (!userText) return;
+  const goal = goalInput.value.trim();
+  if (!goal) return;
 
-  // Show user message
-  chatMessages.innerHTML += `<div class="user">${userText}</div>`;
-  aiInput.value = '';
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+  goalBreakdown.innerHTML = '<p>Loading AI breakdown...</p>';
 
-  // Send to serverless function
-  const res = await fetch('/api/askGPT', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ prompt: userText })
-  });
+  try {
+    const response = await fetch('/api/askGemini', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: `Break down this goal into actionable steps: "${goal}"` }),
+    });
 
-  const data = await res.json();
+    if (!response.ok) {
+      const errData = await response.json();
+      goalBreakdown.innerHTML = `<p>Error: ${errData.error || 'Failed to get response'}</p>`;
+      return;
+    }
 
-  // Show AI response
-  chatMessages.innerHTML += `<div class="ai">${data.reply || '🤖 Sorry, something went wrong.'}</div>`;
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+    const data = await response.json();
+    goalBreakdown.innerHTML = `<h3>🧠 Goal Breakdown</h3><p>${data.answer}</p>`;
+  } catch (error) {
+    goalBreakdown.innerHTML = `<p>Error: ${error.message}</p>`;
+  }
 });
-
-

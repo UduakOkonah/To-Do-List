@@ -165,17 +165,14 @@ logoutBtn.addEventListener('click', () => {
   setupDragAndDrop();
 })();
 
-
-// Voice recognition setup
 const voiceBtn = document.getElementById('voiceBtn');
-const goalInput = document.getElementById('goalInput');
 
-if (voiceBtn && ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = new SpeechRecognition();
   recognition.lang = 'en-US';
-  recognition.interimResults = false;
   recognition.continuous = false;
+  recognition.interimResults = false;
 
   voiceBtn.addEventListener('click', () => {
     voiceBtn.textContent = '🎙️ Listening...';
@@ -192,42 +189,52 @@ if (voiceBtn && ('webkitSpeechRecognition' in window || 'SpeechRecognition' in w
     voiceBtn.textContent = '🎤';
   };
 
-  recognition.onerror = (event) => {
-    console.error('Speech recognition error:', event.error);
+  recognition.onerror = (e) => {
+    console.error("Speech recognition error:", e.error);
     voiceBtn.textContent = '🎤';
   };
 } else {
   voiceBtn.disabled = true;
-  voiceBtn.title = 'Speech recognition not supported in this browser.';
+  voiceBtn.title = "Speech recognition not supported in this browser.";
 }
 
-// Handle goal breakdown form submit and ask Gemini API
-const goalForm = document.getElementById('goalForm');
-const goalBreakdown = document.getElementById('goalBreakdown');
+const aiForm = document.getElementById('aiForm');
+const aiInput = document.getElementById('aiInput');
+const chatMessages = document.getElementById('chatMessages');
+const aiChatBox = document.getElementById('aiChatBox');
+const openAI = document.getElementById('openAI');
+const closeAI = document.getElementById('closeAI');
 
-goalForm.addEventListener('submit', async (e) => {
+// Toggle UI
+openAI.addEventListener('click', () => aiChatBox.classList.remove('hidden'));
+closeAI.addEventListener('click', () => aiChatBox.classList.add('hidden'));
+
+// Handle chat form
+aiForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const goal = goalInput.value.trim();
-  if (!goal) return;
+  const prompt = aiInput.value.trim();
+  if (!prompt) return;
 
-  goalBreakdown.innerHTML = '<p>Loading AI breakdown...</p>';
+  // Add user message
+  const userMessage = document.createElement('div');
+  userMessage.className = 'message user';
+  userMessage.textContent = prompt;
+  chatMessages.appendChild(userMessage);
+  aiInput.value = '';
 
-  try {
-    const response = await fetch('/api/askGemini', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt: `Break down this goal into actionable steps: "${goal}"` }),
-    });
+  // Add loading message
+  const aiMessage = document.createElement('div');
+  aiMessage.className = 'message ai';
+  aiMessage.textContent = 'Typing...';
+  chatMessages.appendChild(aiMessage);
 
-    if (!response.ok) {
-      const errData = await response.json();
-      goalBreakdown.innerHTML = `<p>Error: ${errData.error || 'Failed to get response'}</p>`;
-      return;
-    }
+  // Scroll down
+  chatMessages.scrollTop = chatMessages.scrollHeight;
 
-    const data = await response.json();
-    goalBreakdown.innerHTML = `<h3>🧠 Goal Breakdown</h3><p>${data.answer}</p>`;
-  } catch (error) {
-    goalBreakdown.innerHTML = `<p>Error: ${error.message}</p>`;
-  }
+  // Get response
+  const response = await askGPT(prompt);
+  aiMessage.textContent = response;
+  chatMessages.scrollTop = chatMessages.scrollHeight;
 });
+
+
